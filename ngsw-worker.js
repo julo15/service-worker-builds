@@ -504,7 +504,7 @@ ${error.stack}`;
       } catch (e) {
         return this.adapter.newResponse("", {
           status: 504,
-          statusText: "Gateway Timeout"
+          statusText: "Gateway Timeout (safe fetch 3)"
         });
       }
     }
@@ -725,7 +725,7 @@ ${error.stack}`;
       const [timeoutFetch, networkFetch] = this.networkFetchWithTimeout(req);
       res = await timeoutFetch;
       if (res === void 0) {
-        res = this.adapter.newResponse(null, { status: 504, statusText: "Gateway Timeout" });
+        res = this.adapter.newResponse(null, { status: 504, statusText: "Gateway Timeout (fetch with pref)" });
         event.waitUntil(this.safeCacheResponse(req, networkFetch, lru, okToCacheOpaque));
       } else {
         await this.safeCacheResponse(req, res, lru, okToCacheOpaque);
@@ -763,7 +763,7 @@ ${error.stack}`;
           } catch (e) {
             return this.adapter.newResponse(null, {
               status: 504,
-              statusText: "Gateway Timeout"
+              statusText: "Gateway Timeout (network fetch with timeout)"
             });
           }
         })();
@@ -856,7 +856,7 @@ ${error.stack}`;
       } catch (e) {
         return this.adapter.newResponse(null, {
           status: 504,
-          statusText: "Gateway Timeout"
+          statusText: "Gateway Timeout (safe fetch)"
         });
       }
     }
@@ -1819,7 +1819,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ "Content-Type": "text/plain" }
         this.debugger.log(err, `Driver.fetch(${req.url})`);
         return this.adapter.newResponse(null, {
           status: 504,
-          statusText: "Gateway Timeout"
+          statusText: "Gateway Timeout (safe fetch 2)"
         });
       }
     }
